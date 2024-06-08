@@ -1,0 +1,27 @@
+CREATE TABLE usuarios (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30) NOT NULL,
+    correo_electronico VARCHAR(40) UNIQUE NOT NULL,
+    contraseña VARCHAR(20) NOT NULL,
+    perfiles
+);
+
+CREATE TABLE cursos (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(30) UNIQUE NOT NULL,
+    categoria VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE respuestas (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    mensaje VARCHAR(255) NOT NULL,
+    topico VARCHAR(255) NOT NULL,
+    fecha_creacion DATE DEFAULT CURRENT_DATE,
+    autor VARCHAR(40) NOT NULL,
+    solucion VARCHAR(255) NOT NULL
+
+);
+CREATE TABLE perfil (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(40) NOT NULL
+);

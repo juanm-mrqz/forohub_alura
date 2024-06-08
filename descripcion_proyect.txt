@@ -1,0 +1,43 @@
+Objetivos
+ - Crear una API REST con Spring-Boot y java con la tematica de un foro
+ - App de consola, sin interfaz grafica
+ - Poner una capa de seguridad con Spring Security para registrar usuarios en DB 
+   - Authentication con JWT usando Bearer Token
+   - Almacenar usuario en DB
+
+#Sobre el desafio 
+Un foro es un espacio donde todos los participantes de una plataforma pueden plantear
+ sus preguntas sobre determinados tópicos
+
+¿dónde se almacenan las informaciones? ¿Cómo se tratan los datos para relacionar un tópico
+ con una respuesta, o cómo se relacionan los usuarios con las respuestas de un tópico?
+
+Nuestra API se centrará específicamente en los tópicos, y debe permitir a los usuarios:
+* Crear un nuevo tópico;
+* Mostrar todos los tópicos creados;
+* Mostrar un tópico específico;
+* Actualizar un tópico;
+* Eliminar un tópico
+
+En resumen, nuestro objetivo con este challenge es implementar una API REST con las 
+siguientes funcionalidades:
+
+* API con rutas implementadas siguiendo las mejores prácticas del modelo REST;
+
+* Validaciones realizadas según las reglas de negocio;
+
+* Implementación de una base de datos relacional para la persistencia de la información;
+
+* Servicio de autenticación/autorización para restringir el acceso a la información.
+
+
+=== Herramientas a utilizar
+* Java dependencies
+    Lombok
+    Spring Web
+    Spring Boot DevTools
+    Spring Data JPA
+    Flyway Migration
+    MySQL Driver
+    Validation
+    Spring Security
