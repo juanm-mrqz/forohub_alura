@@ -13,8 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -26,13 +29,19 @@ public class TopicController {
 
     @PostMapping
     @Transactional
-    public void registerTopic(@RequestBody @Valid TopicRegisterData data){
-        topicRepository.save(new Topic(data));
+    public ResponseEntity<Topic> registerTopic
+            (@RequestBody @Valid TopicRegisterData data,
+             UriComponentsBuilder uriComponentBuilder){
+        Topic topic = topicRepository.save(new Topic(data));
+
+        URI url = uriComponentBuilder.path("/medicos/{id}")
+                .buildAndExpand(topic.getId()).toUri();
+        return ResponseEntity.created(url).body(topic);
     }
 
     @GetMapping
-    public Page<TopicListData> getAllTopics(@PageableDefault(size=10, page = 0, sort = "author", direction = Sort.Direction.DESC) Pageable pagination) {
-        return topicRepository.findAll(pagination).map(TopicListData::new);
+    public ResponseEntity<Page<TopicListData>> getAllTopics(@PageableDefault(size=10, page = 0, sort = "author", direction = Sort.Direction.DESC) Pageable pagination) {
+        return ResponseEntity.ok(topicRepository.findAll(pagination).map(TopicListData::new));
 
     }
 
@@ -64,23 +73,23 @@ public class TopicController {
 
     //Detallando un topico
     @GetMapping("/{id}")
-    public TopicListData getTopicDetails(@PathVariable Long id) {
-        return new TopicListData(topicRepository.findById(id).orElseGet(Topic::new));
+    public ResponseEntity<TopicListData> getTopicDetails(@PathVariable Long id) {
+        return ResponseEntity.ok(new TopicListData(topicRepository.findById(id).orElseGet(Topic::new)));
     }
 
     @PutMapping
     @Transactional
-    public TopicListData updateTopic(@RequestBody @Valid TopicUpdateData data) {
-    Topic topicToUpdate = topicRepository.getReferenceById(data.id());
+    public ResponseEntity updateTopic(@RequestBody @Valid TopicUpdateData data) {
+        Topic topicToUpdate = topicRepository.getReferenceById(data.id());
         topicToUpdate.updateTopic(data);
-
-        return new TopicListData(topicToUpdate);
+        return ResponseEntity.ok(new TopicListData(topicToUpdate));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void deleteTopic(@PathVariable Long id) {
+    public ResponseEntity deleteTopic(@PathVariable Long id) {
         Topic topic = topicRepository.getReferenceById(id);
         topicRepository.delete(topic);
+        return ResponseEntity.noContent().build();
     }
 }
