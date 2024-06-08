@@ -1,6 +1,0 @@
-//Seleccionar topics de un año especifico
-select * from topics where YEAR(created_at)=2024;
-
-//Insertar valores de otro año especifico 
-INSERT INTO TOPICS(title, message, author, course, created_at) 
-VALUES('holamanolas', 'sipirilin', 'flanders', 'simpsonitos', '2020-06-07 09:22:12'); 
