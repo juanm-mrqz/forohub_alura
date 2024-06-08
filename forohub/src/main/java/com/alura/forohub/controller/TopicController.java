@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,7 @@ public class TopicController {
     }
 
     @GetMapping
-    public Page<TopicListData> getAllTopics(@PageableDefault(size=2, page = 0, sort = "author") Pageable pagination) {
+    public Page<TopicListData> getAllTopics(@PageableDefault(size=10, page = 0, sort = "author", direction = Sort.Direction.DESC) Pageable pagination) {
         return topicRepository.findAll(pagination).map(TopicListData::new);
 
     }
